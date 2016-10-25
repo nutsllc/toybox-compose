@@ -1,0 +1,32 @@
+nginx:
+    image: nutsllc/toybox-nginx
+    links:
+        - php70-fpm
+        - mariadb
+    ports:
+        - 8080:80
+    environment:
+        - TOYBOX_UID=1000
+        - TOYBOX_GID=1000
+        - PHP_FPM_HOST=php70-fpm:9000
+    volumes_from:
+        - data
+
+php70-fpm:
+    image: php:7.0-fpm
+    links:
+        - mariadb
+    volumes_from:
+        - data
+
+mariadb:
+    image: nutsllc/toybox-mariadb
+    environment:
+        - MYSQL_ROOT_PASSWORD=root
+
+data:
+    image: busybox
+    volumes:
+        - "../.data/nginx-php70-fpm/docroot:/usr/share/nginx/html"
+        - "../.data/nginx-php70-fpm/conf:/etc/nginx"
+        - "../.data/nginx-php56-fpm-mariadb/conf:/var/run/mysql"

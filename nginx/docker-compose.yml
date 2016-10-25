@@ -1,0 +1,15 @@
+nginx:
+    image: nutsllc/toybox-nginx
+    environment:
+        - TOYBOX_UID=1000
+        - TOYBOX_GID=1000
+    volumes_from:
+        - data-nginx
+    ports:
+        - 8080:80
+
+data-nginx:
+    image: busybox
+    volumes:
+        - "../.data/nginx/docroot:/usr/share/nginx/html"
+        - "../.data/nginx/conf:/etc/nginx"

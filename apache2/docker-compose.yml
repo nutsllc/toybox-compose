@@ -6,12 +6,12 @@ services:
             - TOYBOX_UID=1000
             - TOYBOX_GID=1000
         volumes_from:
-            - data-apache2
+            - data
         ports:
             - "8080:80"
     
-    data-apache2:
+    data:
         image: busybox
         volumes:
-            - "../.data/apache2/docroot:/usr/local/apache2/htdocs"
-            - "../.data/apache2/conf:/etc/apache2"
+            - "./data/docroot:/usr/local/apache2/htdocs"
+            - "./data/apache-conf:/etc/apache2"

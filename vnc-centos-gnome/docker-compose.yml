@@ -1,3 +1,5 @@
+version: '2'
+services:
 vnc:
     #image: nutsllc/vnc-centos-gnome
     image: vnc

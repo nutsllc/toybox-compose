@@ -27,6 +27,6 @@ mariadb:
 data:
     image: busybox
     volumes:
-        - "../.data/apache2-php56-mariadb/htdocs:/usr/local/apache2/htdocs"
-        - "../.data/apache2-php56-mariadb/conf:/etc/apache2"
-        - "../.data/nginx-php56-fpm-mariadb/conf:/var/run/mysql"
+        - "./data/docroot:/usr/local/apache2/htdocs"
+        - "./data/apache-conf:/etc/apache2"
+        - "./data/mariadb:/var/run/mysql"

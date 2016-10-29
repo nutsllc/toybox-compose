@@ -10,11 +10,11 @@ lychee:
         - TOYBOX_UID=1000
         - TOYBOX_GID=1000
     volumes:
-        - "./.data:/data"
-        - "./.data/uploads/big:/uploads/big"
-        - "./.data/uploads/medium:/uploads/medium"
-        - "./.data/uploads/thumb:/uploads/thumb"
-        - "./.data/uploads/import:/uploads/import"
+        - "./data:/data"
+        - "./data/uploads/big:/uploads/big"
+        - "./data/uploads/medium:/uploads/medium"
+        - "./data/uploads/thumb:/uploads/thumb"
+        - "./data/uploads/import:/uploads/import"
     ports:
         - "8080:80"
 

@@ -1,15 +1,17 @@
-toybox-apache2:
-    image: nutsllc/toybox-apache2:latest
-    environment:
-        - TOYBOX_UID=1000
-        - TOYBOX_GID=1000
-    volumes_from:
-        - data-apache2
-    ports:
-        - "8080:80"
-
-data-apache2:
-    image: busybox
-    volumes:
-        - "../.data/apache2/docroot:/usr/local/apache2/htdocs"
-        - "../.data/apache2/conf:/etc/apache2"
+version: '2'
+services:
+    toybox-apache2:
+        image: nutsllc/toybox-apache2:latest
+        environment:
+            - TOYBOX_UID=1000
+            - TOYBOX_GID=1000
+        volumes_from:
+            - data
+        ports:
+            - "8080:80"
+    
+    data:
+        image: busybox
+        volumes:
+            - "./data/docroot:/usr/local/apache2/htdocs"
+            - "./data/apache-conf:/etc/apache2"

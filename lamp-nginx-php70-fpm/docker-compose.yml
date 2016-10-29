@@ -13,7 +13,7 @@ nginx:
         - data
 
 php70-fpm:
-    image: php:7.0-fpm
+    image: nutsllc/toybox-php:7.0-fpm
     links:
         - mariadb
     volumes_from:
@@ -27,6 +27,6 @@ mariadb:
 data:
     image: busybox
     volumes:
-        - "../.data/nginx-php70-fpm/docroot:/usr/share/nginx/html"
-        - "../.data/nginx-php70-fpm/conf:/etc/nginx"
-        - "../.data/nginx-php56-fpm-mariadb/conf:/var/run/mysql"
+        - "./data/docroot:/usr/share/nginx/html"
+        - "./data/nginx-conf:/etc/nginx"
+        - "./data/mariadb-conf:/var/run/mysql"

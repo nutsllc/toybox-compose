@@ -1,72 +1,74 @@
-nginx:
-    image: nutsllc/toybox-nginx
-    links:
-        - php56-fpm
-        - mariadb
-    ports:
-        - 8080:80
-    environment:
-        - TOYBOX_UID=1000
-        - TOYBOX_GID=1000
-        - PHP_FPM_HOST=php56-fpm:9000
-    volumes_from:
-        - data
-
-php56-fpm:
-    image: nutsllc/toybox-php:5.6-fpm
-    links:
-        - mariadb
-    volumes_from:
-        - data
-    environment:
-        - TOYBOX_UID=1000
-        - TOYBOX_GID=1000
-        - CALENDAR=disable
-        - EXIF=disable
-        - GD=enable
-        - GETTEXT=disable
-        - INTL=enable
-        - MCRYPT=enable
-        - MEMCACHED=disable
-        - MYSQLI=enable
-        - OPCACHE=enable
-        - PDO_MYSQL=enable
-        - PDO_PGSQL=disable
-        - SOCKETS=disable
-        - ZIP=disable
-        - APCU=enable
-        - REDIS=disable
-        - XDEBUG=disable
-        - MEMORY_LIMIT="32M"
-        - POST_MAX_SIZE="16M"
-        - UPLOAD_MAX_FILESIZE="8M"
-        - ERROR_REPORTING="E_ALL|E_STRICT"
-        - DISPLAY_ERRORS="Off"
-        - LOG_ERRORS="On"
-        - ERROR_LOG="/var/log/php_error.log"
-        - DEFAULT_CHARSET="'UTF-8'"
-        - MBSTRING_LANGUAGE="Japanese"
-        - MBSTRING_INTERNAL_ENCODING="UTF-8"
-        - MBSTRING_ENCODING_TRANSLATION="Off"
-        - MBSTRING_HTTP_INPUT="pass"
-        - MBSTRING_HTTP_OUTPUT="pass"
-        - MBSTRING_DETECT_ORDER="auto"
-        - EXPOSE_PHP="Off"
-        - SESSION_HASH_FUNCTION="0"
-        - SESSION_SAVE_HANDLER="files"
-        - SESSION_SAVE_PATH="'/var/lib/php/session'"
-        - SHORT_OPEN_TAG="On"
-        - MAX_EXECUTION_TIME="30"
-        - DATE_TIMEZONE="UTC"
-
-mariadb:
-    image: nutsllc/toybox-mariadb
-    environment:
-        - MYSQL_ROOT_PASSWORD=root
-
-data:
-    image: busybox
-    volumes:
-        - "./data/docroot:/usr/share/nginx/html"
-        - "./data/nginx-conf:/etc/nginx"
-        - "./data/mariadb:/var/run/mysql"
+version: '2'
+services:
+    nginx:
+        image: nutsllc/toybox-nginx
+        links:
+            - php56-fpm
+            - mariadb
+        ports:
+            - 8080:80
+        environment:
+            - TOYBOX_UID=1000
+            - TOYBOX_GID=1000
+            - PHP_FPM_HOST=php56-fpm:9000
+        volumes_from:
+            - data
+    
+    php56-fpm:
+        image: nutsllc/toybox-php:5.6-fpm
+        links:
+            - mariadb
+        volumes_from:
+            - data
+        environment:
+            - TOYBOX_UID=1000
+            - TOYBOX_GID=1000
+            - CALENDAR=disable
+            - EXIF=disable
+            - GD=enable
+            - GETTEXT=disable
+            - INTL=enable
+            - MCRYPT=enable
+            - MEMCACHED=disable
+            - MYSQLI=enable
+            - OPCACHE=enable
+            - PDO_MYSQL=enable
+            - PDO_PGSQL=disable
+            - SOCKETS=disable
+            - ZIP=disable
+            - APCU=enable
+            - REDIS=disable
+            - XDEBUG=disable
+            - MEMORY_LIMIT="32M"
+            - POST_MAX_SIZE="16M"
+            - UPLOAD_MAX_FILESIZE="8M"
+            - ERROR_REPORTING="E_ALL|E_STRICT"
+            - DISPLAY_ERRORS="Off"
+            - LOG_ERRORS="On"
+            - ERROR_LOG="/var/log/php_error.log"
+            - DEFAULT_CHARSET="'UTF-8'"
+            - MBSTRING_LANGUAGE="Japanese"
+            - MBSTRING_INTERNAL_ENCODING="UTF-8"
+            - MBSTRING_ENCODING_TRANSLATION="Off"
+            - MBSTRING_HTTP_INPUT="pass"
+            - MBSTRING_HTTP_OUTPUT="pass"
+            - MBSTRING_DETECT_ORDER="auto"
+            - EXPOSE_PHP="Off"
+            - SESSION_HASH_FUNCTION="0"
+            - SESSION_SAVE_HANDLER="files"
+            - SESSION_SAVE_PATH="'/var/lib/php/session'"
+            - SHORT_OPEN_TAG="On"
+            - MAX_EXECUTION_TIME="30"
+            - DATE_TIMEZONE="UTC"
+    
+    mariadb:
+        image: nutsllc/toybox-mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+    
+    data:
+        image: busybox
+        volumes:
+            - "./data/docroot:/usr/share/nginx/html"
+            - "./data/nginx-conf:/etc/nginx"
+            - "./data/mariadb:/var/run/mysql"

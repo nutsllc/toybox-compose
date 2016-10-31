@@ -1,5 +1,5 @@
 lychee:
-    image: lychee
+    image: nutsllc/toybox-lychee
     links:
         - mariadb:mariadb
     environment:

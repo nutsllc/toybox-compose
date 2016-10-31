@@ -5,6 +5,7 @@ services:
         environment:
             - TOYBOX_UID=1000
             - TOYBOX_GID=1000
+            - JAPANESE_SUPPORT=yes
         volumes:
             - ./data:/workspace
         ports:

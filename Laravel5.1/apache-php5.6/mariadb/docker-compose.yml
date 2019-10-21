@@ -1,0 +1,30 @@
+version: '2'
+services:
+    laravel:
+#        image: nutsllc/toybox-laravel:5.1-php5.6-apache
+        image: lara7
+        ports:
+            - 8080:80
+        environment:
+            - TOYBOX_UID=1000
+            - TOYBOX_GID=1000
+            - ALL_PHP_MODULES=enable
+#            - DB_HOST=mariadb
+#            - DB_PORT=3306
+#            - DB_DATABASE=laravel
+#            - DB_USERNAME=laravel
+#            - DB_PASSWORD=laravel
+            - LARAVEL_TZ=Asia/Tokyo
+            - LARAVEL_LOCALE=ja
+        volumes:
+            - "./data/laravel:/var/www/laravel"
+
+    mariadb:
+        image: nutsllc/toybox-mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=laradb
+            - MYSQL_USER=lara
+            - MYSQL_PASSWORD=password
+        volumes:
+            - "./data/mysql:/var/lib/mysql"

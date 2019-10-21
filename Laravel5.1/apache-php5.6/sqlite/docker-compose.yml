@@ -1,0 +1,15 @@
+version: '2'
+services:
+    laravel:
+        image: nutsllc/toybox-laravel:5.1-php5.6-apache
+        ports:
+            - 8080:80
+        environment:
+            - TOYBOX_UID=1000
+            - TOYBOX_GID=1000
+            - ALL_PHP_MODULES=enable
+            - DB_CONNECTION=sqlite
+            - LARAVEL_TZ=Asia/Tokyo
+            - LARAVEL_LOCALE=ja
+        volumes:
+            - "./data/laravel:/var/www/laravel"

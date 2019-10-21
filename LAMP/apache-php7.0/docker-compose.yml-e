@@ -1,0 +1,28 @@
+version: '2'
+services:
+    apache-php7.0:
+        image: nutsllc/toybox-php:{{IMAGE_PHP_VERSION}}-apache
+        environment:
+            - TOYBOX_UID=1000
+            - TOYBOX_GID=1000
+            - ALL_PHP_MODULES=enable
+            - MEMORY_LIMIT=128M
+            - POST_MAX_SIZE=64M
+            - UPLOAD_MAX_FILESIZE=32M
+        volumes_from:
+            - data
+        ports:
+            - "8080:80"
+    
+    mariadb:
+        image: nutsllc/toybox-mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        volumes_from:
+            - data
+    
+    data:
+        image: busybox
+        volumes:
+            - "./data/docroot:/var/www/html"
+            - "./data/mariadb:/var/run/mysql"

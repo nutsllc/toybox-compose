@@ -1,0 +1,11 @@
+version: '2'
+services:
+    laravel:
+        image: nutsllc/toybox-laravel:5.3-php7.0-apache
+        ports:
+            - 8080:80
+        environment:
+            - ALL_PHP_MODULES=enable
+            - DB_CONNECTION=sqlite
+        volumes:
+            - "./data/laravel:/var/www/laravel"

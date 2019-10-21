@@ -1,0 +1,37 @@
+version: '2'
+services:
+    nginx:
+        image: nutsllc/toybox-nginx
+        environment:
+            - TOYBOX_UID=1000
+            - TOYBOX_GID=1000
+            - PHP_FPM_HOST=php-fpm:9000
+        volumes_from:
+            - data
+        ports:
+            - 8080:80
+    
+    php-fpm:
+        image: nutsllc/toybox-php:7.0-fpm
+        environment:
+            - TOYBOX_UID=1000
+            - TOYBOX_GID=1000
+            - ALL_PHP_MODULES=enable
+            - MEMORY_LIMIT=128M
+            - POST_MAX_SIZE=64M
+            - UPLOAD_MAX_FILESIZE=32M
+        volumes_from:
+            - data
+    
+    mariadb:
+        image: nutsllc/toybox-mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        volumes_from:
+            - data
+    
+    data:
+        image: busybox
+        volumes:
+            - "./data/docroot:/usr/share/nginx/html"
+            - "./data/mariadb:/var/run/mysql"

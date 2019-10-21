@@ -1,5 +1,6 @@
 lychee:
-    image: nutsllc/toybox-lychee
+#    image: nutsllc/toybox-lychee
+    image: lychee
     links:
         - mariadb:mariadb
     environment:
@@ -11,17 +12,18 @@ lychee:
         - TOYBOX_GID=1000
     volumes:
         - "./data:/data"
-        - "./data/uploads/big:/uploads/big"
-        - "./data/uploads/medium:/uploads/medium"
-        - "./data/uploads/thumb:/uploads/thumb"
-        - "./data/uploads/import:/uploads/import"
+        - "./data/uploads/:/uploads"
+    #    - "./data/uploads/big:/uploads/big"
+    #    - "./data/uploads/medium:/uploads/medium"
+    #    - "./data/uploads/thumb:/uploads/thumb"
+    #    - "./data/uploads/import:/uploads/import"
     ports:
         - "8080:80"
 
 mariadb:
-    image: nutsllc/toybox-mariadb:10.1.14
+    image: nutsllc/toybox-mariadb
     volumes:
-        - "./.data/mysql:/var/lib/mysql"
+        - "./data/mysql:/var/lib/mysql"
     environment:
         - MYSQL_ROOT_PASSWORD=root
         - MYSQL_DATABASE=lychee
@@ -30,5 +32,3 @@ mariadb:
         - TOYBOX_UID=1000
         - TOYBOX_GID=1000
         - TERM=xterm
-    ports:
-        - "3306"

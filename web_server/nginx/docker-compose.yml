@@ -1,0 +1,16 @@
+version: '2'
+services:
+    nginx:
+        image: nutsllc/toybox-nginx:1.11
+        environment:
+            - TOYBOX_UID=1000
+            - TOYBOX_GID=1000
+        volumes_from:
+            - data
+        ports:
+            - 8080:80
+    
+    data:
+        image: busybox
+        volumes:
+            - "./data/docroot:/usr/share/nginx/html"

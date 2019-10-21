@@ -1,0 +1,45 @@
+version: '2'
+services:
+    nginx:
+        image: nutsllc/toybox-nginx:latest
+        ports:
+            - 8080:80
+        environment:
+            - TOYBOX_UID=1000
+            - TOYBOX_GID=1000
+            - DOCUMENT_ROOT=/usr/share/nginx/laravel/public
+            - PHP_FPM_HOST=php70-fpm:9000
+        volumes_from:
+            - lara-data
+    
+    php70-fpm:
+        image: nutsllc/toybox-php:5.6-fpm
+        volumes_from:
+            - lara-data
+        environment:
+            - ALL_PHP_MODULES=enable
+    
+    mariadb:
+        image: nutsllc/toybox-mariadb
+        volumes_from:
+            - lara-data
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=laravel
+            - MYSQL_USER=laravel
+            - MYSQL_PASSWORD=laravel
+    
+    lara-data:
+        image: nutsllc/toybox-laravel-data:5.3
+        environment:
+            - DB_HOST=mariadb
+            - DB_PORT=3306
+            - DB_DATABASE=laravel
+            - DB_USERNAME=laravel
+            - DB_PASSWORD=laravel
+            - LARAVEL_TZ=Asia/Tokyo
+            - LARAVEL_LOCALE=ja
+        volumes:
+            - "./data/laravel:/usr/share/nginx/laravel"
+            - "./data/nginx-conf:/etc/nginx"
+            - "./data/mysql:/var/lib/mysql"
